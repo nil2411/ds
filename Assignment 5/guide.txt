@@ -1,0 +1,159 @@
+ASSIGNMENT
+TITLE: Implement Token Ring Based Mutual Exclusion Algorithm (Java – Linux)
+
+---
+
+## PROJECT FILE
+
+TokenRing.java
+
+---
+
+## SYSTEM REQUIREMENTS
+
+1. Ubuntu / Linux OS
+2. Java JDK (version 8 or above)
+3. Terminal
+
+---
+
+## PART 1: OPEN TERMINAL
+
+Step 1: Open Terminal
+
+* Press: Ctrl + Alt + T
+
+---
+
+## PART 2: NAVIGATE TO PROJECT DIRECTORY
+
+Step 2: Go to Assignment folder
+
+Example:
+cd ~/Desktop/ds/Assignment\ 5
+
+---
+
+## PART 3: CHECK JAVA INSTALLATION
+
+Step 3: Verify Java
+
+Command:
+java -version
+
+---
+
+## PART 4: COMPILE PROGRAM
+
+Step 4: Compile Java File
+
+Command:
+javac TokenRing.java
+
+👉 This generates:
+TokenRing.class
+
+---
+
+## PART 5: RUN PROGRAM
+
+Step 5: Execute Program
+
+Command:
+java TokenRing
+
+---
+
+## WORKING OF PROGRAM
+
+1. Multiple processes are arranged in a logical ring
+2. A token is passed from one process to another
+3. Only the process holding the token can enter critical section
+4. After execution, token is passed to next process
+5. This ensures mutual exclusion
+
+---
+
+## ALGORITHM STEPS
+
+1. Initialize N processes in a ring
+2. Generate a token at one process
+3. Pass token sequentially (P1 → P2 → P3 → ... → Pn)
+4. When process receives token:
+
+   * If it wants to enter critical section → execute
+   * Else → pass token to next process
+5. Continue cycle
+
+---
+
+## OUTPUT (Example)
+
+Process 1 has token
+Process 1 entering critical section
+Process 1 leaving critical section
+
+Process 2 has token
+Process 2 entering critical section
+Process 2 leaving critical section
+
+... continues
+
+---
+
+## FINAL EXECUTION ORDER
+
+1. javac TokenRing.java
+2. java TokenRing
+
+---
+
+## WORKING FLOW
+
+Token → Process 1 → Process 2 → Process 3 → ... → Process N → back to Process 1
+
+---
+
+## KEY CONCEPTS
+
+1. Token:
+   Special permission to enter critical section
+
+2. Mutual Exclusion:
+   Only one process executes critical section at a time
+
+3. Ring Topology:
+   Processes connected in circular form
+
+4. Deadlock-Free:
+   No two processes can hold token simultaneously
+
+---
+
+## IMPORTANT NOTES
+
+1. Only one token exists in system
+2. Token must always circulate
+3. If token is lost → system fails
+4. Ensures fairness (no starvation)
+
+---
+
+## COMMON ERRORS
+
+Error: javac not found
+→ Install JDK:
+sudo apt install openjdk-8-jdk
+
+Error: Class not found
+→ Check file name and compile again
+
+---
+
+## CONCLUSION
+
+The program successfully demonstrates the Token Ring Mutual Exclusion Algorithm where processes access the critical section sequentially using a circulating token, ensuring proper synchronization.
+
+---
+
+## END OF ASSIGNMENT
