@@ -1,0 +1,181 @@
+ASSIGNMENT
+TITLE: Multi-threaded Client-Server Communication using Java RMI
+
+---
+
+## PROJECT FILES
+
+Client.java
+Server.java
+ServerImpl.java
+ServerIntf.java
+
+(All files must be in SAME folder)
+
+---
+
+## PART 1: OPEN TERMINAL
+
+Step 1: Open Terminal / Command Prompt
+
+Windows:
+
+* Press Win + R → type cmd → Enter
+
+OR open terminal in project folder
+
+---
+
+## PART 2: NAVIGATE TO PROJECT FOLDER
+
+Step 2: Go to your Assignment folder
+
+Example:
+cd Desktop/ds/Assignment 1
+
+(Adjust path according to your system)
+
+---
+
+## PART 3: COMPILE ALL FILES
+
+Step 3: Compile Java files
+
+Command:
+javac *.java
+
+This generates:
+
+* Client.class
+* Server.class
+* ServerImpl.class
+* ServerIntf.class
+
+---
+
+## PART 4: GENERATE STUB (OPTIONAL)
+
+Step 4: Generate Stub class (only if required)
+
+Command:
+rmic ServerImpl
+
+(Note: New Java versions may not require this step) ([GeeksforGeeks][1])
+
+---
+
+## PART 5: START RMI REGISTRY
+
+Step 5: Start RMI Registry
+
+IMPORTANT:
+
+* Run this in SAME folder
+
+Linux / Ubuntu:
+rmiregistry
+
+Windows:
+start rmiregistry
+
+(Default port = 1099) ([Oracle Docs][2])
+
+👉 Keep this terminal OPEN
+
+---
+
+## PART 6: RUN SERVER
+
+Step 6: Open NEW terminal
+
+Command:
+cd Desktop/ds/Assignment 1
+
+---
+
+Step 7: Run Server
+
+Command:
+java Server
+
+Expected Output:
+Server started...
+
+👉 Server registers remote object with RMI Registry
+
+---
+
+## PART 7: RUN CLIENT
+
+Step 8: Open ANOTHER terminal
+
+Command:
+cd Desktop/ds/Assignment 1
+
+---
+
+Step 9: Run Client
+
+Command:
+java Client
+
+---
+
+## FINAL EXECUTION ORDER
+
+1. javac *.java
+2. rmiregistry
+3. java Server
+4. java Client
+
+---
+
+## WORKING FLOW
+
+Client → calls remote method
+→ RMI Registry finds server
+→ ServerImpl executes method
+→ Result returned to Client
+
+---
+
+## MULTI-THREADING CONCEPT
+
+* RMI server can handle multiple clients
+* Each client request runs in separate thread
+* Multiple clients can connect simultaneously
+
+---
+
+## COMMON ERRORS
+
+1. Error: Connection refused
+   → Start rmiregistry first
+
+2. Error: Class not found
+   → Run javac *.java again
+
+3. Error: Port already in use
+   → Close previous rmiregistry
+
+---
+
+## IMPORTANT NOTES
+
+* All files must be in same directory
+* Run rmiregistry BEFORE server
+* Run server BEFORE client
+* Keep registry running
+
+---
+
+## CONCLUSION
+
+The program successfully demonstrates distributed client-server communication using Java RMI, where multiple clients can communicate with the server concurrently.
+
+---
+
+## END OF ASSIGNMENT
+
+[1]: https://www.geeksforgeeks.org/java/remote-method-invocation-in-java/?utm_source=chatgpt.com "Remote Method Invocation in Java"
+[2]: https://docs.oracle.com/javase/tutorial/rmi/running.html?utm_source=chatgpt.com "Running the Example Programs (The Java™ Tutorials > RMI)"
