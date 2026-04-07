@@ -1,37 +1,230 @@
-sudo apt install mpich
-Steps:
-1. Unzip opt
-2. transfer .c file to opt->openmpi->bin
-3. follow belore ALgorithm/Steps
+ASSIGNMENT
+TITLE: Develop a Distributed System to Find Sum of N Elements using OpenMP / MPI
 
-Algorithm / Methods / Steps:
+---
 
-1. Download openmpi-4.1.4.tar.bz2 from http://www.open-mpi.org in a folder say LP5.
-2. Goto the terminal (Command prompt)
-3. Update using
-    sudo apt-get update
-    sudo apt install gcc {if not already installed}
+## AIM
 
-4. Goto the directory which contains the downloaded file
-5. Extract the files using
-tar -jxf openmpi-4.1.4.tar.bz2
+To develop a distributed system that calculates the sum of N elements in an array by dividing the work among multiple processors and displaying intermediate sums.
 
-6. The directory openmpi-4.1.4 is created
-7. Configure, compile and install by executing the following commands
-    ./configure --prefix=$HOME/opt/openmpi
-    make all
-    make install
+---
 
-8. Now openmpi folder is created in ‘opt‘ folder of Home directory.
-9. Now the folder LP5 can be deleted (optional)
-10. Update the PATH and LD_LIBRARY_PATH environment variable using
-echo "export PATH=\$PATH:\$HOME/opt/openmpi/bin" >> $HOME/.bashrc
-echo "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:\$HOME/opt/openmpi/lib">>$HOME/.bashrc
+## SYSTEM REQUIREMENTS
 
-11. Compile the program using
-mpicc name of the program
+Operating System:
 
-12. Execute the program using
-mpirun -np 4 ./a.out
-or run below command
-mpirun --oversubscribe -np 4 ./a.out
+* Ubuntu Linux (Recommended) OR Windows (with WSL)
+
+Software Required:
+
+1. GCC Compiler (for OpenMP)
+2. OpenMPI (for MPI programs)
+3. Terminal (Command Line)
+
+---
+
+## PART 1: SETUP SYSTEM
+
+Step 1: Open Terminal
+
+* Press: Ctrl + Alt + T
+
+Step 2: Update System
+
+* Run command:
+  sudo apt update
+
+Step 3: Install GCC Compiler
+
+* Run:
+  sudo apt install build-essential
+
+Step 4: Install OpenMPI (for MPI method)
+
+* Run:
+  sudo apt install openmpi-bin libopenmpi-dev
+
+---
+
+## PART 2: PROGRAM USING OPENMP
+
+Step 5: Create Program File
+
+* In terminal:
+  nano sum_openmp.c
+
+Step 6: Write OpenMP Code
+
+#include <stdio.h>
+#include <omp.h>
+
+int main() {
+int arr[8] = {1,2,3,4,5,6,7,8};
+int n = 8;
+int total_sum = 0;
+
+```
+#pragma omp parallel
+{
+    int id = omp_get_thread_num();
+    int total_threads = omp_get_num_threads();
+    int local_sum = 0;
+
+    int chunk = n / total_threads;
+    int start = id * chunk;
+    int end = start + chunk;
+
+    for (int i = start; i < end; i++) {
+        local_sum += arr[i];
+    }
+
+    printf("Thread %d: Intermediate Sum = %d\n", id, local_sum);
+
+    #pragma omp critical
+    total_sum += local_sum;
+}
+
+printf("Final Sum = %d\n", total_sum);
+return 0;
+```
+
+}
+
+Step 7: Save File
+
+* Press: CTRL + X
+* Press: Y
+* Press: Enter
+
+Step 8: Compile Program
+
+* Run:
+  gcc -fopenmp sum_openmp.c -o sum_openmp
+
+Step 9: Execute Program
+
+* Run:
+  ./sum_openmp
+
+---
+
+## OUTPUT (OpenMP)
+
+Thread 0: Intermediate Sum = 3
+Thread 1: Intermediate Sum = 7
+Thread 2: Intermediate Sum = 11
+Thread 3: Intermediate Sum = 15
+Final Sum = 36
+
+---
+
+## PART 3: PROGRAM USING MPI
+
+Step 10: Create MPI File
+
+* Run:
+  nano sum_mpi.c
+
+Step 11: Write MPI Code
+
+#include <stdio.h>
+#include <mpi.h>
+
+int main(int argc, char *argv[]) {
+int rank, size;
+int arr[8] = {1,2,3,4,5,6,7,8};
+int local_sum = 0, total_sum = 0;
+
+```
+MPI_Init(&argc, &argv);
+MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+int chunk = 8 / size;
+int start = rank * chunk;
+int end = start + chunk;
+
+for (int i = start; i < end; i++) {
+    local_sum += arr[i];
+}
+
+printf("Processor %d: Intermediate Sum = %d\n", rank, local_sum);
+
+MPI_Reduce(&local_sum, &total_sum, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
+
+if (rank == 0) {
+    printf("Final Sum = %d\n", total_sum);
+}
+
+MPI_Finalize();
+return 0;
+```
+
+}
+
+Step 12: Save File
+
+* CTRL + X → Y → Enter
+
+Step 13: Compile MPI Program
+
+* Run:
+  mpicc sum_mpi.c -o sum_mpi
+
+Step 14: Execute MPI Program
+
+* Run:
+  mpirun -np 4 ./sum_mpi
+
+(Note: -np 4 means 4 processors)
+
+---
+
+## OUTPUT (MPI)
+
+Processor 0: Intermediate Sum = 3
+Processor 1: Intermediate Sum = 7
+Processor 2: Intermediate Sum = 11
+Processor 3: Intermediate Sum = 15
+Final Sum = 36
+
+---
+
+## WORKING EXPLANATION
+
+1. The array of N elements is created
+2. The array is divided into equal parts (N/n)
+3. Each processor/thread receives one part
+4. Each processor calculates its local sum
+5. Intermediate sums are printed
+6. All local sums are combined
+7. Final sum is displayed
+
+---
+
+## KEY TERMS
+
+1. Distributed System:
+   Multiple processors working together
+
+2. Parallel Processing:
+   Execution of multiple tasks simultaneously
+
+3. OpenMP:
+   Uses threads (shared memory)
+
+4. MPI:
+   Uses processes (distributed memory)
+
+5. Intermediate Sum:
+   Partial sum computed by each processor
+
+---
+
+## CONCLUSION
+
+The program successfully demonstrates distributed computing by dividing the workload among multiple processors, calculating intermediate sums, and combining them to obtain the final result.
+
+---
+
+## END OF ASSIGNMENT
