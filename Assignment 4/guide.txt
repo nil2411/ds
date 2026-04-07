@@ -1,0 +1,185 @@
+ASSIGNMENT
+TITLE: Implement Berkeley Algorithm for Clock Synchronization (Python – Linux)
+
+---
+
+## PROJECT FILES
+
+server.py
+client.py
+
+(All files must be in SAME folder)
+
+---
+
+## SYSTEM REQUIREMENTS
+
+1. Ubuntu / Linux OS
+2. Python 3 installed
+3. Terminal
+
+---
+
+## PART 1: OPEN TERMINAL
+
+Step 1: Open Terminal
+
+* Press: Ctrl + Alt + T
+
+---
+
+## PART 2: NAVIGATE TO PROJECT DIRECTORY
+
+Step 2: Go to Assignment folder
+
+Example:
+cd ~/Desktop/ds/Assignment\ 4
+
+---
+
+## PART 3: CHECK PYTHON INSTALLATION
+
+Step 3: Verify Python
+
+Command:
+python3 --version
+
+---
+
+## PART 4: RUN SERVER (MASTER CLOCK)
+
+Step 4: Start Server
+
+Command:
+python3 server.py
+
+👉 Server acts as MASTER node
+
+Expected Output:
+Server started...
+Waiting for clients...
+
+---
+
+## PART 5: RUN CLIENTS (SLAVE CLOCKS)
+
+Step 5: Open NEW terminal
+
+Command:
+cd ~/Desktop/ds/Assignment\ 4
+
+---
+
+Step 6: Run Client
+
+Command:
+python3 client.py
+
+👉 Run multiple clients (open multiple terminals)
+
+---
+
+## WORKING OF PROGRAM
+
+1. Server (master) starts
+2. Clients (slaves) connect to server
+3. Server requests time from all clients
+4. Each client sends its local time
+5. Server calculates average time
+6. Server sends adjustment to each client
+7. Clients update their clocks
+
+---
+
+## ALGORITHM STEPS (BERKELEY)
+
+1. One node is selected as MASTER
+2. Master sends request to all SLAVE nodes
+3. Slaves send their current time
+4. Master calculates average time
+5. Master ignores faulty clocks (if any)
+6. Master computes time difference
+7. Master sends adjustment (not actual time)
+8. All nodes update their clocks
+
+👉 Master computes average time and synchronizes all clocks ([GeeksforGeeks][1])
+
+---
+
+## FINAL EXECUTION ORDER
+
+1. python3 server.py
+2. python3 client.py (run multiple times)
+
+---
+
+## OUTPUT
+
+Client 1 Time: 10:05:02
+Client 2 Time: 10:05:07
+Client 3 Time: 10:05:04
+
+Average Time: 10:05:04
+
+Adjusted Times:
+Client 1 → +2 sec
+Client 2 → -3 sec
+Client 3 → 0 sec
+
+---
+
+## WORKING FLOW
+
+Clients → send time → Server
+Server → calculate average → send adjustment
+Clients → update clocks
+
+---
+
+## KEY CONCEPTS
+
+1. Master Node:
+   Controls synchronization
+
+2. Slave Nodes:
+   Send time to master
+
+3. Clock Drift:
+   Difference in system clocks
+
+4. Synchronization:
+   Making all clocks equal
+
+---
+
+## IMPORTANT NOTES
+
+1. Run server BEFORE clients
+2. Run multiple clients for demonstration
+3. Keep server terminal running
+4. All systems connected via network (localhost works)
+
+---
+
+## COMMON ERRORS
+
+Error: Address already in use
+→ Change port in server.py
+
+Error: Connection refused
+→ Start server first
+
+Error: Python not found
+→ Install Python3
+
+---
+
+## CONCLUSION
+
+The program successfully demonstrates Berkeley Algorithm where a master node synchronizes clocks of multiple client nodes by calculating average time and sending adjustments.
+
+---
+
+## END OF ASSIGNMENT
+
+[1]: https://www.geeksforgeeks.org/operating-systems/berkeleys-algorithm/?utm_source=chatgpt.com "Berkeley's Algorithm"
