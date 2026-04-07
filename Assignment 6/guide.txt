@@ -1,0 +1,182 @@
+ASSIGNMENT
+TITLE: Implement Bully Algorithm and Ring Algorithm for Leader Election (Java – Linux)
+
+---
+
+## PROJECT FILES
+
+BullyAlgoExample.java
+RingAlgorithm.java
+
+---
+
+## SYSTEM REQUIREMENTS
+
+1. Ubuntu / Linux OS
+2. Java JDK (version 8 or above)
+3. Terminal
+
+---
+
+## PART 1: OPEN TERMINAL
+
+Step 1: Open Terminal
+
+* Press: Ctrl + Alt + T
+
+---
+
+## PART 2: NAVIGATE TO PROJECT DIRECTORY
+
+Step 2: Go to Assignment folder
+
+Example:
+cd ~/Desktop/ds/Assignment\ 6
+
+---
+
+## PART 3: CHECK JAVA INSTALLATION
+
+Step 3: Verify Java
+
+Command:
+java -version
+
+---
+
+## PART 4: COMPILE PROGRAMS
+
+Step 4: Compile both Java files
+
+Command:
+javac BullyAlgoExample.java RingAlgorithm.java
+
+👉 This generates:
+
+* BullyAlgoExample.class
+* RingAlgorithm.class
+
+---
+
+## PART 5: RUN BULLY ALGORITHM
+
+Step 5: Execute Bully Algorithm
+
+Command:
+java BullyAlgoExample
+
+---
+
+## WORKING OF BULLY ALGORITHM
+
+1. Each process has a unique ID
+2. Highest ID process becomes coordinator
+3. If coordinator fails → election starts
+4. Process sends election message to higher ID processes
+5. Higher process responds "OK"
+6. Highest active process becomes leader
+
+---
+
+## OUTPUT (Example)
+
+Process 2 detects failure
+Process 2 sends election message
+Process 3 responds
+Process 4 becomes coordinator
+
+---
+
+## PART 6: RUN RING ALGORITHM
+
+Step 6: Execute Ring Algorithm
+
+Command:
+java RingAlgorithm
+
+---
+
+## WORKING OF RING ALGORITHM
+
+1. Processes arranged in circular ring
+2. Election message circulates in ring
+3. Each process adds its ID to message
+4. Message completes full circle
+5. Highest ID is selected as leader
+6. Leader is announced to all processes
+
+---
+
+## OUTPUT (Example)
+
+Process 1 starts election
+Message passes: 1 → 2 → 3 → 4
+Highest ID = 4
+Process 4 becomes coordinator
+
+---
+
+## FINAL EXECUTION ORDER
+
+1. javac BullyAlgoExample.java RingAlgorithm.java
+2. java BullyAlgoExample
+3. java RingAlgorithm
+
+---
+
+## COMPARISON OF ALGORITHMS
+
+Bully Algorithm:
+
+* Fast
+* Uses direct communication
+* High message overhead
+
+Ring Algorithm:
+
+* Simple
+* Uses circular structure
+* Slower than Bully
+
+---
+
+## KEY CONCEPTS
+
+1. Leader Election:
+   Selecting one coordinator among processes
+
+2. Coordinator:
+   Process that manages system
+
+3. Fault Tolerance:
+   System recovers from failures
+
+---
+
+## IMPORTANT NOTES
+
+1. Each process must have unique ID
+2. Highest ID becomes leader
+3. Election triggered on failure
+4. Both algorithms ensure one coordinator
+
+---
+
+## COMMON ERRORS
+
+Error: javac not found
+→ Install JDK:
+sudo apt install openjdk-8-jdk
+
+Error: Class not found
+→ Compile again
+
+---
+
+## CONCLUSION
+
+The program successfully demonstrates leader election using Bully and Ring algorithms, where processes coordinate to elect a leader in a distributed system.
+
+---
+
+## END OF ASSIGNMENT
