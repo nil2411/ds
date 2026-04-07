@@ -1,0 +1,196 @@
+ASSIGNMENT 7
+TITLE: Create a Calculator Web Service and a Distributed Client using NetBeans
+
+---
+
+## PART 1: CREATE WEB SERVICE (SERVER)
+
+Step 1: Open NetBeans IDE
+
+* Launch Apache NetBeans IDE
+
+Step 2: Create a Web Application
+
+* Go to File → New Project
+* Select: Java Web → Web Application
+* Click Next
+* Project Name: assign7
+* Select Server: GlassFish Server
+* Click Finish
+
+Step 3: Create Web Service
+
+* Right-click on project “assign7”
+* Select New → Web Service
+* Enter Name: MyCalculator
+* Package: com.myservice
+* Click Finish
+
+Step 4: Add Operations to Web Service
+
+* Right-click on MyCalculator (under Web Services)
+* Select “Add Operation”
+* Add the following methods:
+
+  1. add(double a, double b)
+  2. subtract(double a, double b)
+  3. multiply(double a, double b)
+  4. divide(double a, double b)
+
+Step 5: Write Web Service Code
+
+* Modify MyCalculator.java as follows:
+
+import javax.jws.WebService;
+import javax.jws.WebMethod;
+
+@WebService(serviceName = "MyCalculator")
+public class MyCalculator {
+
+```
+@WebMethod
+public double add(double a, double b) {
+    return a + b;
+}
+
+@WebMethod
+public double subtract(double a, double b) {
+    return a - b;
+}
+
+@WebMethod
+public double multiply(double a, double b) {
+    return a * b;
+}
+
+@WebMethod
+public double divide(double a, double b) {
+    if (b == 0) return 0;
+    return a / b;
+}
+```
+
+}
+
+Step 6: Build and Deploy Web Service
+
+* Right-click project → Build
+* Right-click project → Deploy
+
+Step 7: Test Web Service
+
+* Right-click MyCalculator → Test Web Service
+* Enter values and verify output
+
+Step 8: Note WSDL URL
+
+* Example:
+  http://localhost:8080/assign7/MyCalculator?wsdl
+
+---
+
+## PART 2: CREATE CLIENT (HTML + SERVLET)
+
+Step 9: Create Client Project
+
+* Go to File → New Project
+* Select Java Web → Web Application
+* Project Name: CalculatorWebServiceClient
+* Click Finish
+
+Step 10: Create HTML Form (index.html)
+
+* Open index.html and write:
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Calculator</title>
+</head>
+<body>
+
+<h2>Calculator</h2>
+
+<form action="CalculatorServlet" method="post">
+    Enter A: <input type="text" name="value1"><br><br>
+    Enter B: <input type="text" name="value2"><br><br>
+    <input type="submit" value="Add">
+</form>
+
+</body>
+</html>
+
+Step 11: Add Web Service Client
+
+* Right-click project → New → Web Service Client
+* Paste WSDL URL:
+  http://localhost:8080/assign7/MyCalculator?wsdl
+* Click Finish
+* Proxy classes will be generated
+
+Step 12: Create Servlet
+
+* Right-click project → New → Servlet
+* Name: CalculatorServlet
+* Click Finish
+
+Step 13: Write Servlet Code
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class CalculatorServlet extends HttpServlet {
+
+```
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+
+    double a = Double.parseDouble(request.getParameter("value1"));
+    double b = Double.parseDouble(request.getParameter("value2"));
+
+    com.myservice.MyCalculator_Service service = new com.myservice.MyCalculator_Service();
+    com.myservice.MyCalculator port = service.getMyCalculatorPort();
+
+    double result = port.add(a, b);
+
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+
+    out.println("<h2>Result: " + result + "</h2>");
+}
+```
+
+}
+
+Step 14: Build and Run Client
+
+* Right-click project → Clean and Build
+* Run index.html
+
+---
+
+## FINAL WORKING FLOW
+
+User enters values in HTML form
+→ Request sent to Servlet
+→ Servlet calls Web Service
+→ Web Service processes data
+→ Result sent back to Servlet
+→ Servlet displays result in browser
+
+---
+
+## CONCLUSION
+
+This application demonstrates a distributed system where:
+
+* Web Service performs calculations
+* Servlet acts as a middle layer
+* HTML provides user interface
+
+---
+
+## END OF ASSIGNMENT
