@@ -1,0 +1,166 @@
+ASSIGNMENT
+TITLE: Develop a Distributed Application using CORBA (String Reverse) – LINUX
+
+---
+
+## PROJECT FILES
+
+ReverseClient.java
+ReverseServer.java
+ReverseImpl.java
+ReverseModule.idl
+
+(All files must be in SAME folder)
+
+---
+
+## SYSTEM REQUIREMENTS
+
+1. Ubuntu / Linux OS
+2. Java JDK 8 (CORBA supported)
+3. Terminal
+
+---
+
+## PART 1: OPEN TERMINAL
+
+Step 1: Open Terminal
+
+* Press: Ctrl + Alt + T
+
+---
+
+## PART 2: NAVIGATE TO PROJECT DIRECTORY
+
+Step 2: Go to your Assignment folder
+
+Example:
+cd ~/Desktop/ds/Assignment\ 2
+
+(Note: Use \ for space in folder name)
+
+---
+
+## PART 3: COMPILE IDL FILE
+
+Step 3: Run IDL Compiler
+
+Command:
+idlj -fall ReverseModule.idl
+
+👉 This generates:
+
+* ReverseModule/ folder
+* Stub and Skeleton classes
+
+---
+
+## PART 4: COMPILE JAVA FILES
+
+Step 4: Compile all Java files
+
+Command:
+javac *.java ReverseModule/*.java
+
+---
+
+## PART 5: START ORBD (NAMING SERVICE)
+
+Step 5: Start ORBD
+
+Command:
+orbd -ORBInitialPort 1050 -ORBInitialHost localhost
+
+👉 Keep this terminal OPEN
+
+---
+
+## PART 6: RUN SERVER
+
+Step 6: Open NEW terminal
+
+Command:
+cd ~/Desktop/ds/Assignment\ 2
+
+---
+
+Step 7: Run Server
+
+Command:
+java ReverseServer -ORBInitialPort 1050 -ORBInitialHost localhost
+
+Output:
+Server ready and waiting...
+
+---
+
+## PART 7: RUN CLIENT
+
+Step 8: Open ANOTHER terminal
+
+Command:
+cd ~/Desktop/ds/Assignment\ 2
+
+---
+
+Step 9: Run Client
+
+Command:
+java ReverseClient -ORBInitialPort 1050 -ORBInitialHost localhost
+
+---
+
+## OUTPUT
+
+Enter String: Hello
+Output: olleH
+
+---
+
+## FINAL EXECUTION ORDER
+
+1. idlj -fall ReverseModule.idl
+2. javac *.java ReverseModule/*.java
+3. orbd -ORBInitialPort 1050
+4. java ReverseServer
+5. java ReverseClient
+
+---
+
+## WORKING FLOW
+
+Client → ORB → Naming Service (ORBD)
+→ Server Object → Process → Return Result
+
+---
+
+## IMPORTANT NOTES
+
+1. Run all commands from SAME directory
+2. Always start ORBD before server
+3. Server must run before client
+4. Keep ORBD terminal running
+5. Java version should be 8 (CORBA removed in newer versions)
+
+---
+
+## COMMON ERRORS
+
+Error: idlj command not found
+→ Install JDK 8
+
+Error: Connection refused
+→ Start ORBD first
+
+Error: Naming error
+→ Check port (1050) and host
+
+---
+
+## CONCLUSION
+
+The program successfully demonstrates CORBA-based distributed communication in Linux, where the client sends a request and the server processes and returns the result using object brokering.
+
+---
+
+## END OF ASSIGNMENT
