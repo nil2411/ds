@@ -16,11 +16,6 @@ public class Client {
             System.out.println("Enter num2 ");
             int b = sc.nextInt();
 
-            // System.out.println("Enter str1 ");
-            // String str1 = sc.nextLine();
-
-            // System.out.println("Enter str2 ");
-            // String str2 = sc.nextLine();
 
             System.out.println("Add is " + serverIntf.addition(a, b));
 
@@ -30,15 +25,7 @@ public class Client {
 
             System.out.println("div is " + serverIntf.division(a, b));
 
-            System.out.println("square is " + serverIntf.square(a));
-
-            System.out.println("squar root is " + serverIntf.squareroot(b));
-
-            // System.out.println("Palindrome of string is ");
-            // serverIntf.palindrome(str1);
-
-            // System.out.println("String is equal or not");
-            // serverIntf.isequalstring(str1, str2);
+          
 
         } catch (Exception e) {
             System.out.println("Exception at Client " + e);
