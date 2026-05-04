@@ -1,43 +1,41 @@
 ASSIGNMENT
-TITLE: Multi-threaded Client-Server Communication using Java RMI
+TITLE: Multi-threaded Client-Server Communication using Java RMI (Ubuntu Version)
 
----
+--------------------------------------------------
 
-## PROJECT FILES
+PROJECT FILES
 
 Client.java
 Server.java
 ServerImpl.java
 ServerIntf.java
 
-(All files must be in SAME folder)
+(All files must be in SAME directory)
 
----
+--------------------------------------------------
 
-## PART 1: OPEN TERMINAL
+PART 1: OPEN TERMINAL
 
-Step 1: Open Terminal / Command Prompt
+Step 1: Open Terminal
 
-Windows:
+Press Ctrl + Alt + T
+OR open Terminal from applications
 
-* Press Win + R → type cmd → Enter
+--------------------------------------------------
 
-OR open terminal in project folder
+PART 2: NAVIGATE TO PROJECT FOLDER
 
----
-
-## PART 2: NAVIGATE TO PROJECT FOLDER
-
-Step 2: Go to your Assignment folder
+Step 2: Move to your project directory
 
 Example:
-cd Desktop/ds/Assignment 1
+cd ~/Desktop/ds/Assignment\ 1
 
-(Adjust path according to your system)
+OR
+cd "~/Desktop/ds/Assignment 1"
 
----
+--------------------------------------------------
 
-## PART 3: COMPILE ALL FILES
+PART 3: COMPILE ALL FILES
 
 Step 3: Compile Java files
 
@@ -45,53 +43,47 @@ Command:
 javac *.java
 
 This generates:
+Client.class
+Server.class
+ServerImpl.class
+ServerIntf.class
 
-* Client.class
-* Server.class
-* ServerImpl.class
-* ServerIntf.class
+--------------------------------------------------
 
----
+PART 4: GENERATE STUB (OPTIONAL)
 
-## PART 4: GENERATE STUB (OPTIONAL)
-
-Step 4: Generate Stub class (only if required)
+Step 4: Generate Stub class (only for old Java versions)
 
 Command:
 rmic ServerImpl
 
-(Note: New Java versions may not require this step) ([GeeksforGeeks][1])
+(Note: Modern Java versions do NOT require this step)
 
----
+--------------------------------------------------
 
-## PART 5: START RMI REGISTRY
+PART 5: START RMI REGISTRY
 
-Step 5: Start RMI Registry
+Step 5: Start RMI Registry (IMPORTANT)
 
-IMPORTANT:
+Run in SAME folder:
 
-* Run this in SAME folder
-
-Linux / Ubuntu:
 rmiregistry
 
-Windows:
-start rmiregistry
+OR (recommended):
 
-(Default port = 1099) ([Oracle Docs][2])
+rmiregistry 1099 &
 
-👉 Keep this terminal OPEN
+(Default port = 1099)
 
----
+Keep this running.
 
-## PART 6: RUN SERVER
+--------------------------------------------------
+
+PART 6: RUN SERVER
 
 Step 6: Open NEW terminal
 
-Command:
-cd Desktop/ds/Assignment 1
-
----
+cd ~/Desktop/ds/Assignment\ 1
 
 Step 7: Run Server
 
@@ -101,81 +93,90 @@ java Server
 Expected Output:
 Server started...
 
-👉 Server registers remote object with RMI Registry
+Server registers remote object with RMI Registry
 
----
+--------------------------------------------------
 
-## PART 7: RUN CLIENT
+PART 7: RUN CLIENT
 
 Step 8: Open ANOTHER terminal
 
-Command:
-cd Desktop/ds/Assignment 1
-
----
+cd ~/Desktop/ds/Assignment\ 1
 
 Step 9: Run Client
 
 Command:
 java Client
 
----
+--------------------------------------------------
 
-## FINAL EXECUTION ORDER
+FINAL EXECUTION ORDER
 
 1. javac *.java
 2. rmiregistry
 3. java Server
 4. java Client
 
----
+--------------------------------------------------
 
-## WORKING FLOW
+WORKING FLOW
 
 Client → calls remote method
 → RMI Registry finds server
 → ServerImpl executes method
 → Result returned to Client
 
----
+--------------------------------------------------
 
-## MULTI-THREADING CONCEPT
+MULTI-THREADING CONCEPT
 
-* RMI server can handle multiple clients
-* Each client request runs in separate thread
-* Multiple clients can connect simultaneously
+- RMI server handles multiple clients
+- Each client request runs in a separate thread
+- Multiple clients can connect simultaneously
 
----
+--------------------------------------------------
 
-## COMMON ERRORS
+COMMON ERRORS
 
-1. Error: Connection refused
-   → Start rmiregistry first
+1. Connection refused
+   Cause: Registry not started
+   Fix: Run rmiregistry
 
-2. Error: Class not found
-   → Run javac *.java again
+2. Class not found
+   Cause: Compilation issue
+   Fix: Run javac *.java
 
-3. Error: Port already in use
-   → Close previous rmiregistry
+3. Port already in use
+   Cause: Registry already running
+   Fix:
+   ps -ef | grep rmiregistry
+   kill -9 <PID>
 
----
+4. Permission issues
+   Fix:
+   chmod +x *.java
 
-## IMPORTANT NOTES
+--------------------------------------------------
 
-* All files must be in same directory
-* Run rmiregistry BEFORE server
-* Run server BEFORE client
-* Keep registry running
+IMPORTANT NOTES
 
----
+- All files must be in same directory
+- Run rmiregistry BEFORE server
+- Run server BEFORE client
+- Keep registry running
+- Ensure Java is installed
 
-## CONCLUSION
+Check Java:
 
-The program successfully demonstrates distributed client-server communication using Java RMI, where multiple clients can communicate with the server concurrently.
+java -version
+javac -version
 
----
+--------------------------------------------------
 
-## END OF ASSIGNMENT
+CONCLUSION
 
-[1]: https://www.geeksforgeeks.org/java/remote-method-invocation-in-java/?utm_source=chatgpt.com "Remote Method Invocation in Java"
-[2]: https://docs.oracle.com/javase/tutorial/rmi/running.html?utm_source=chatgpt.com "Running the Example Programs (The Java™ Tutorials > RMI)"
+The program demonstrates distributed client-server communication using Java RMI on Ubuntu. The server handles multiple clients concurrently using multi-threading, allowing efficient remote method execution.
+
+--------------------------------------------------
+
+END OF ASSIGNMENT
