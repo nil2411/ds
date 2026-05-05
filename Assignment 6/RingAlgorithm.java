@@ -1,95 +1,51 @@
-import java.util.Scanner;
+import java.util.*;
 
-public class RingAlgorithm {
+public class RingSimple {
     public static void main(String[] args) {
-        int thisProcessId, numProcesses, failedID;
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter the number of processes: ");
-        numProcesses = scanner.nextInt();
+        Scanner sc = new Scanner(System.in);
 
-        // while loop for validation
-        while (true) {
-            System.out.print("Enter the ID of this process (between 1 and " + numProcesses + "): ");
-            thisProcessId = scanner.nextInt();
-            if (thisProcessId <= 0 && thisProcessId > numProcesses) {
-                System.out.println("Please enter correct input");
-            } else
-                break;
+        System.out.print("Enter number of processes: ");
+        int n = sc.nextInt();
+
+        boolean[] alive = new boolean[n];
+
+        // Initially all processes are alive
+        for (int i = 0; i < n; i++) {
+            alive[i] = true;
         }
 
-        // while loop for validation
-        while (true) {
-            System.out.print("Enter the ID of this process which failed ");
-            failedID = scanner.nextInt();
-            if (failedID <= 0 && failedID > numProcesses) {
-                System.out.println("Please enter correct input");
-                continue;
-            } else
-                break;
-        }
+        System.out.print("Enter failed process ID: ");
+        int failed = sc.nextInt();
+        alive[failed - 1] = false;
 
-        // Initialize the ring
-        RingProcess[] ring = new RingProcess[numProcesses];
-        for (int i = 0; i < numProcesses; i++) {
-            ring[i] = new RingProcess(i + 1);
-        }
+        System.out.print("Enter process to start election: ");
+        int start = sc.nextInt();
 
-        // Set the next process in the ring for each process
-        for (int i = 0; i < numProcesses; i++) {
-            ring[i].setNextProcess(ring[(i + 1) % numProcesses]);
-        }
+        ArrayList<Integer> list = new ArrayList<>();
 
-        // Start the election
-        ring[thisProcessId - 1].startElection(failedID, numProcesses);
-        scanner.close();
-    }
-}
+        int current = start;
 
-class RingProcess {
-    private int processId;
-    private RingProcess nextProcess;
-    private boolean isLeader;
+        System.out.println("\nElection starts:\n");
 
-    public RingProcess(int processId) {
-        this.processId = processId;
-        this.isLeader = false;
-    }
+        do {
+            if (alive[current - 1]) {
+                list.add(current);
 
-    public void setNextProcess(RingProcess nextProcess) {
-        this.nextProcess = nextProcess;
-    }
-
-    public void startElection(int failedID, int numProcesses) {
-        System.out.println("Process " + processId + " starts the election.");
-
-        if (isLeader) {
-            System.out.println("Process " + processId + " is already the leader.");
-            return;
-        }
-
-        int[] arr = new int[numProcesses - 1];
-
-        int i = 0;
-        RingProcess currentProcess = this;
-        arr[i] = currentProcess.processId;
-
-        while (currentProcess.nextProcess != this) {
-            if (currentProcess.nextProcess.processId != failedID) {
-                arr[i++] = currentProcess.nextProcess.processId;
-
+                System.out.print("Process " + current + " sends: ");
+                System.out.println(list);
             }
-            currentProcess = currentProcess.nextProcess;
 
-        }
-        int max = arr[0];
+            // Move to next process in ring
+            current = (current % n) + 1;
 
-        // Traverse array elements from second and
-        // compare every element with current max
-        for (i = 1; i < arr.length; i++)
-            if (arr[i] > max)
-                max = arr[i];
-        System.out.println(max + " elected as the new leader.");
+        } while (current != start);
 
+        // Find leader (max ID)
+        int leader = Collections.max(list);
+
+        System.out.println("\nLeader elected: Process " + leader);
+
+        sc.close();
     }
 }
